@@ -58,8 +58,8 @@ flowchart LR
 
 ### 1. Clonar y configurar
 ```bash
-git clone https://github.com/TU-USUARIO/facturas-agent.git
-cd facturas-agent
+git clone https://github.com/TU-USUARIO/receipts-agent.git
+cd receipts-agent
 cp .env.example .env
 ```
 Por defecto `LLM_PROVIDER=mock`: el proyecto funciona **sin API key**, con un extractor por reglas que lee las facturas de ejemplo. Para usar IA real, poné `LLM_PROVIDER=anthropic` y tu `ANTHROPIC_API_KEY`.
@@ -140,7 +140,7 @@ Los tests usan un repositorio en memoria y el extractor por reglas, así que cor
 
 ## 📁 Estructura
 ```
-facturas-agent/
+receipts-agent/
 ├── app/
 │   ├── main.py          # API REST (FastAPI)
 │   ├── extractor.py     # Agente de extracción (Claude / mock)
