@@ -1,0 +1,21 @@
+ORIGINAL
+FACTURA A                                   Cod. 01
+Razón Social: Nube Atlántica S.A.
+Domicilio Comercial: Av. Colón 2450, Mar del Plata
+CUIT: 30-71234567-1
+Condición frente al IVA: IVA Responsable Inscripto
+
+Punto de Venta: 0003   Comp. Nro: 00001234
+Fecha de Emisión: 15/10/2026
+
+Cliente: Estudio Contable Ejemplo
+CUIT Cliente: 27-28765432-1
+
+Descripción                              Cantidad   Precio Unit.
+Servicio de hosting cloud - octubre             1    85.000,00
+
+Importe Neto Gravado: $ 85.000,00
+IVA 21%: $ 17.850,00
+Importe Total: $ 102.850,00
+
+CAE N°: 76432198765432   Fecha de Vto. de CAE: 25/10/2026

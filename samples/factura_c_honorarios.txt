@@ -1,0 +1,16 @@
+ORIGINAL
+FACTURA C                                   Cod. 11
+Razón Social: Lucía Fernández
+Domicilio Comercial: Güemes 1520, Mar del Plata
+CUIT: 20-34567890-6
+Condición frente al IVA: Responsable Monotributo
+
+Punto de Venta: 0002   Comp. Nro: 00000318
+Fecha de Emisión: 30/10/2026
+
+Descripción                              Cantidad   Precio Unit.
+Honorarios por asesoramiento en procesos        1   180.000,00
+
+Importe Total: $ 180.000,00
+
+CAE N°: 76432198000077   Fecha de Vto. de CAE: 09/11/2026

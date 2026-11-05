@@ -1,0 +1,17 @@
+ORIGINAL
+FACTURA B                                   Cod. 06
+Razón Social: Librería Puerto S.R.L.
+Domicilio Comercial: Rivadavia 3100, Mar del Plata
+CUIT: 30-70998877-4
+Condición frente al IVA: IVA Responsable Inscripto
+
+Punto de Venta: 0001   Comp. Nro: 00045871
+Fecha de Emisión: 22/10/2026
+
+Descripción                              Cantidad   Precio Unit.
+Resma A4 75g                                    5     3.290,00
+Toner compatible HP 85A                         1     7.000,00
+
+Importe Total: $ 23.450,00
+
+CAE N°: 76432198000011   Fecha de Vto. de CAE: 01/11/2026

@@ -1,0 +1,157 @@
+{
+  "name": "Agente de Facturas y Gastos",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": { "item": [{ "mode": "everyMinute" }] },
+        "simple": false,
+        "filters": { "q": "has:attachment subject:factura is:unread" },
+        "options": { "downloadAttachments": true }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Nuevo mail con factura",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api:8000/facturas",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "archivo",
+              "inputDataFieldName": "attachment_0"
+            }
+          ]
+        },
+        "options": {
+          "response": { "response": { "neverError": true, "fullResponse": true } }
+        }
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Enviar a la API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "loose" },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.body.requiere_revision }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 300,
+              "operator": { "type": "number", "operation": "gte" }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0003-4000-8000-000000000003",
+      "name": "¿Necesita revisión?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [480, 0]
+    },
+    {
+      "parameters": {
+        "sendTo": "tu-email@ejemplo.com",
+        "subject": "⚠️ Factura para revisar",
+        "emailType": "text",
+        "message": "=Una factura necesita revisión manual.\n\nProveedor: {{ $json.body.proveedor_nombre || 'desconocido' }}\nTotal: {{ $json.body.total || '-' }}\nObservaciones: {{ ($json.body.observaciones || [$json.body.detail]).join(' | ') }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0004-4000-8000-000000000004",
+      "name": "Avisar por mail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [720, -80]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "months", "triggerAtDayOfMonth": 1, "triggerAtHour": 9 }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0005-4000-8000-000000000005",
+      "name": "Día 1 de cada mes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calcula el mes anterior para armar el informe de cierre\nconst hoy = new Date();\nconst anterior = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 1);\nreturn [{ json: { anio: anterior.getFullYear(), mes: anterior.getMonth() + 1 } }];"
+      },
+      "id": "a1b2c3d4-0006-4000-8000-000000000006",
+      "name": "Mes anterior",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://api:8000/informes/{{ $json.anio }}/{{ $json.mes }}/google-docs",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0007-4000-8000-000000000007",
+      "name": "Generar informe en Google Docs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "tu-email@ejemplo.com",
+        "subject": "📊 Informe mensual de gastos listo",
+        "emailType": "text",
+        "message": "=Ya está disponible el informe de gastos del mes:\n{{ $json.url }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0008-4000-8000-000000000008",
+      "name": "Enviar link del informe",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [720, 300]
+    }
+  ],
+  "connections": {
+    "Nuevo mail con factura": {
+      "main": [[{ "node": "Enviar a la API", "type": "main", "index": 0 }]]
+    },
+    "Enviar a la API": {
+      "main": [[{ "node": "¿Necesita revisión?", "type": "main", "index": 0 }]]
+    },
+    "¿Necesita revisión?": {
+      "main": [[{ "node": "Avisar por mail", "type": "main", "index": 0 }], []]
+    },
+    "Día 1 de cada mes": {
+      "main": [[{ "node": "Mes anterior", "type": "main", "index": 0 }]]
+    },
+    "Mes anterior": {
+      "main": [[{ "node": "Generar informe en Google Docs", "type": "main", "index": 0 }]]
+    },
+    "Generar informe en Google Docs": {
+      "main": [[{ "node": "Enviar link del informe", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "America/Argentina/Buenos_Aires" },
+  "pinData": {}
+}

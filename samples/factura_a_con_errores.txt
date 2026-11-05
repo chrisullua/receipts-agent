@@ -1,0 +1,16 @@
+ORIGINAL
+FACTURA A                                   Cod. 01
+Razón Social: Transportes del Sur S.A.
+Domicilio Comercial: Ruta 2 km 398, Mar del Plata
+CUIT: 30-69123456-5
+Condición frente al IVA: IVA Responsable Inscripto
+
+Punto de Venta: 0005   Comp. Nro: 00002210
+Fecha de Emisión: 28/10/2026
+
+Descripción                              Cantidad   Precio Unit.
+Flete Mar del Plata - Buenos Aires              1    50.000,00
+
+Importe Neto Gravado: $ 50.000,00
+IVA 21%: $ 10.500,00
+Importe Total: $ 61.000,00
